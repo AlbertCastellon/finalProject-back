@@ -16,14 +16,23 @@ router.get('/', (req, res) => {
 })
 
 router.get('/api/usuarios', (req, res) => {
+    dbConnection.connect(function(error) {
+        if(error) {
+            throw error
+        }else {
+            console.log('conexion lograda')
+        }
+    })
     let data
+
     dbConnection.query(
         'SELECT * FROM users',
         function (err, results, fields) {
-          console.log(results); // results contains rows returned by server
-          console.log(fields); // fields contains extra meta data about results, if available
+          console.table(results); 
+          data = results
         }
       );
+    dbConnection.end()
     res.json(data)
 })
 
@@ -47,6 +56,6 @@ router.get('/api/comentarios', (req, res) => {
 
 })
 
-dbConnection.end()
+
 
 module.exports = router
