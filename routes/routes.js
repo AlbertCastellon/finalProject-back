@@ -27,15 +27,17 @@ router.get('/api/usuarios', (req, res) => {
     dbConnection.query(
         'SELECT nombre, primer_apellido, email, username FROM users',
         function (err, results) {
-          console.table(results); 
           data = results
+          res.json(data)
         }
       );
     dbConnection.end()
-    res.json(data)
+    
+ 
 })
 
 router.post('/register', (req, res) => {
+    console.log(req.body)
     dbConnection.connect(function(error) {
         if(error) {
             throw error
@@ -43,9 +45,9 @@ router.post('/register', (req, res) => {
             console.log('conexion lograda')
         }
     })
-    let data
     dbConnection.query(
-        'INSERT INTO users (nombre, primer_apellido, email, username, password)',
+        `INSERT INTO users (nombre, primer_apellido, email, username, password) 
+        VALUES('${req.body.nombre}', '${req.body.primer_apellido}', '${req.body.email}', '${req.body.username}', '${req.body.password}')`,
         function (err, results) {
             if (err) throw err;
             console.log("1 record inserted");
@@ -69,10 +71,11 @@ router.get('/api/admin/citas', (req, res) => {
         function (err, results) {
             if (err) throw err;
             data = results
+            res.json(data)
         }
       );
     dbConnection.end()
-    res.json(data)
+    
 })
 
 
@@ -91,10 +94,11 @@ router.get('/api/cita/:username', (req, res) => {
         function (err, results) {
             if (err) throw err;
             data = results
+            res.json(data)
         }
       );
     dbConnection.end()
-    res.json(data)
+    
 })
 
 router.get('/api/comentarios', (req, res) => {
@@ -107,16 +111,37 @@ router.get('/api/comentarios', (req, res) => {
     })
     let data
     dbConnection.query(
-        'SELECT comentarios.title, comentarios.comment users.username, FROM comentarios INNER JOIN users ON comentarios.userId = users.id',
+        'SELECT comentarios.title, comentarios.coment, users.username FROM comentarios LEFT JOIN users ON comentarios.userId = users.id',
         function (err, results) {
             if (err) throw err;
             data = results
+            res.json(data)
         }
       );
     dbConnection.end()
-    res.json(data)
+    
 })
 
+router.post('/comentarios', (req, res) => {
+    console.log(req.body)
+    dbConnection.connect(function(error) {
+        if(error) {
+            throw error
+        }else {
+            console.log('conexion lograda')
+        }
+    })
+    dbConnection.query(
+        `INSERT INTO comentarios (title, coment) 
+        VALUES('${req.body.title}', '${req.body.coment}')`,
+        function (err, results) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        }
+      );
+    dbConnection.end()
+    res.redirect('/')
+})
 
 
 module.exports = router
