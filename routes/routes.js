@@ -82,49 +82,6 @@ router.post('/login', async (req, res) => {
     dbConnection.end()
 })
 
-router.get('/api/admin/citas', (req, res) => {   
-    dbConnection.connect(function(error) {
-        if(error) {
-            throw error
-        }else {
-            console.log('conexion lograda')
-        }
-    })
-    let data
-    dbConnection.query(
-        'SELECT users.username, users.nombre, users.primer_apellido, citas.fecha_hora FROM users INNER JOIN citas ON users.id = citas.userId',
-        function (err, results) {
-            if (err) throw err;
-            data = results
-            res.json(data)
-        }
-      );
-    dbConnection.end()
-    
-})
-
-
-router.get('/api/cita/:username', (req, res) => {   
-    dbConnection.connect(function(error) {
-        if(error) {
-            throw error
-        }else {
-            console.log('conexion lograda')
-        }
-    })
-    const {username} = req.params
-    let data
-    dbConnection.query(
-        `SELECT users.username, users.nombre, users.primer_apellido, citas.fecha_hora FROM users INNER JOIN citas ON users.id = citas.userId WHERE username = ${username}`,
-        function (err, results) {
-            if (err) throw err;
-            data = results
-            res.json(data)
-        }
-      );
-    dbConnection.end()
-    
-})
 
 router.get('/api/comentarios', (req, res) => {
     dbConnection.connect(function(error) {

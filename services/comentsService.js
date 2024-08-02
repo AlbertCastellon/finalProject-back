@@ -5,14 +5,14 @@ const getAllComents = async () => {
     return results;
 };
 
-const createComment = async (title, coment) => {
+const createComent = async (title, coment) => {
     await pool.query(
-        `INSERT INTO comentarios (title, coment) VALUES ($1, $2)`,
+        `INSERT INTO comentarios (title, coment) VALUES (?, ?)`,
         [title, coment]
     );
 };
 
 module.exports = {
     getAllComents,
-    createComment
+    createComent
 }

@@ -10,10 +10,7 @@ async function hashPassword(password) {
 }
 
 async function comparePassword(myPlaintextPassword, hash) {
-
-    const permiso = await bcrypt.compare(myPlaintextPassword, hash, function(err, result) {
-        return result
-    });
+    const permiso = await bcrypt.compare(myPlaintextPassword, hash);
     return permiso
 }
 

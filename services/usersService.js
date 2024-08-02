@@ -7,13 +7,13 @@ const getAllUsers = async () => {
 
 const createUser = async (nombre, primer_apellido, email, username, password) => {
     await pool.query(
-        'INSERT INTO users (nombre, primer_apellido, email, username, password) VALUES ($1, $2, $3, $4, $5)',
+        'INSERT INTO users (nombre, primer_apellido, email, username, password) VALUES (?, ?, ?, ?, ?)',
         [nombre, primer_apellido, email, username, password]
     );
 };
 
 const findUserByUsername = async (username) => {
-    const [results] = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    const [results] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
     return results[0];
 };
 

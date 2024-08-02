@@ -12,7 +12,4 @@ router.post('/comentarios', [
     comentsControllers.createComent);
 
 
-
-
-
 module.exports = router;
