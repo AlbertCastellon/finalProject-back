@@ -8,6 +8,7 @@ router.get('/api/comentarios', comentsControllers.getAllComents)
 router.post('/comentarios', [
         body('title').notEmpty(),
         body('coment').notEmpty(),
+        body('userId').notEmpty(),
     ], 
     comentsControllers.createComent);
 

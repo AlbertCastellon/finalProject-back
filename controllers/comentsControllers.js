@@ -12,8 +12,8 @@ const getAllComents = async (req, res) => {
 
 const createComent = async (req, res) => {
     try {
-        const { title, coment } = req.body;
-        await comentsService.createComent(title, coment);
+        const { title, coment, userId } = req.body;
+        await comentsService.createComent(title, coment, userId);
         res.redirect('/foro');
     } catch (err) {
         res.status(500).json({ error: err.message });
