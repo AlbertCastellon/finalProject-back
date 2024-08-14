@@ -9,7 +9,7 @@ const createComent = async (title, coment, userId) => {
     await pool.query(
         `INSERT INTO comentarios (title, coment, userId) VALUES (?, ?, ?)`,
         [title, coment, userId]
-    );
+    )
 };
 
 module.exports = {
